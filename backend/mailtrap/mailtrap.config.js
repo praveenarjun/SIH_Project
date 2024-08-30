@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 // Create a transporter object using your email service
-const transporter = nodemailer.createTransport({
+export const MailtrapClient = nodemailer.createTransport({
     service: 'gmail', // or any other service like 'yahoo', 'outlook', etc.
     auth: {
         user: 'raftaramrit@gmail.com', // your email address
@@ -10,16 +10,16 @@ const transporter = nodemailer.createTransport({
 });
 
 // Define email options
-const mailOptions = {
+export const sender = {
     from: 'raftaramrit@gmail.com',  // sender address
-    to: 'vvivu09123@gmail.com',   // list of receivers
+    to: 'hrithikroshan7485@gmail.com',   // list of receivers
     subject: 'Hello ✔',            // Subject line
     text: 'Hello world?',           // plain text body
-    html: '<b>Hello world?</b>'     // HTML body
+    html: '<b>Hello worlced?</b>'     // HTML body
 };
 
 // Send email
-transporter.sendMail(mailOptions, (error, info) => {
+MailtrapClient.sendMail(sender, (error, info) => {
     if (error) {
         return console.log(error);
     }
