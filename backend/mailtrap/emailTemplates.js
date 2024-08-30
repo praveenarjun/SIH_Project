@@ -161,7 +161,9 @@ export const WELCOME_EMAIL_TEMPLATE = `
     <img src="https://thumbs.dreamstime.com/b/college-student-thinking-his-dream-jobs-young-holding-book-cloud-speech-over-head-97433279.jpg" alt="Welcome Image" style="width: 100%; height: auto; border-radius: 5px;">
     <p>Hello {name},</p>
     <p>Welcome to Future Generation We're excited to have you on board.</p>
-    <p>If you have any questions, please don't hesitate to contact us.</p>
+    <p>If you have any questions, please don't hesitate to contact us. </p>
+    <h3>Phone-No: 8863967178</h3>
+    <h4>Gmail: tulshiprashadpanday892@gmail.com</h4>
     <a href="#" class="button">Continue to Our Website</a>
   </div>
   <div class="footer">

@@ -4,7 +4,7 @@ import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js
 import { sendVerificationEmail } from '../mailtrap/emails.js';
 import { sendWelcomeEmail } from '../mailtrap/emails.js';
 import crypto from 'crypto';
-
+import { sendResetPasswordResetEmail } from '../mailtrap/emails.js';
 import bcryptjs from 'bcryptjs';
 
 
@@ -117,7 +117,7 @@ export const logout = async (req, res) => {
 export const forgotPassword = async (req, res) => {
     const {email} = req.body;
     try{
-        await user = await User.findOne({email});
+        const user = await User.findOne({email});
         if(!user){
             return res.status(400).json({success:false,message:"User not found"});
         }
@@ -129,8 +129,11 @@ export const forgotPassword = async (req, res) => {
         await user.save();
         //send email
 
-        await sendResetPasswordEmail(user.email,`http://localhost:5173/reset-password/${resetToken}`);
+        await sendResetPasswordResetEmail(user.email,`${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+        res.status(200).json({success:true,message:"Password reset email link sent successfully"});
     }catch(err){
+        console.log("error in forgot password",err);
+        res.status(400).json({success:false,message:err.message});
 
     }
     }
