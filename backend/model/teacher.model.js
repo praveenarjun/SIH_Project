@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
-const studentSchema = new mongoose.Schema({
+const teacherSchema = new mongoose.Schema({
+    photo: {
+        type:String,
+        required:true
+    },
     name:{
         type:String,
         required:true
@@ -13,7 +17,7 @@ const studentSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
-    Semester:{
+    experience:{
         type:Number,
         required:true
     },
@@ -21,16 +25,24 @@ const studentSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    Branch:{
+    field:{
         type:String,
         required:true
     },
-    Intrest:{
+    Qualification:{
         type:String,
         required:true
-    }
+    },
+    linkedinProfile:{
+        type:String,
+        required:true
+    },
+    requests: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'student'
+    }]
+
 },{timestamps: true});
 //created and updated are added to the schema
 
-export const User = mongoose.model('User',userSchema);
-
+export const teacher = mongoose.model('Teacher',teacherSchema);
