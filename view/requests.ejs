@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Requests</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function applyFilters() {
+            const cgpaFilter = document.getElementById('cgpaFilter').value;
+            const fieldFilter = document.getElementById('fieldFilter').value;
+            const teacherId = document.getElementById('teacherId').value;
+            window.location.href = `/teacher/${teacherId}/requests?cgpaFilter=${cgpaFilter}&fieldFilter=${fieldFilter}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Student Requests</h2>
+        <input type="hidden" id="teacherId" value="<%= teacherId %>">
+        <div class="mb-3">
+            <label for="cgpaFilter">Filter by CGPA:</label>
+            <select id="cgpaFilter" class="form-control" onchange="applyFilters()">
+                <option value="">Select</option>
+                <option value="highToLow">High to Low</option>
+                <option value="lowToHigh">Low to High</option>
+                <option value="7">Greater than 7</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="fieldFilter">Filter by Field of Work:</label>
+            <input type="text" id="fieldFilter" class="form-control" oninput="applyFilters()">
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>CGPA</th>
+                    <th>Enrollment No.</th>
+                    <th>Field of Work</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% students.forEach(function(student) { %>
+                    <tr>
+                        <td><%= student.name %></td>
+                        <td><%= student.cgpa %></td>
+                        <td><%= student.enrollmentNo %></td>
+                        <td><%= student.fieldOfWork %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

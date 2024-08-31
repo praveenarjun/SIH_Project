@@ -8,15 +8,23 @@ import { sendResetPasswordResetEmail } from '../mailtrap/emails.js';
 import bcryptjs from 'bcryptjs';
 
 
+
+
 export const signup =async (req, res) => {
-    const {email, password, name} = req.body;
+    const {email, password, name,role} = req.body;
     try{
-        if(!email || !password || !name){
+        if(!email || !password || !name ||!role){
             throw new Error("All fields are required");
         }
         const userAlreadyExists = await User.findOne({email});
         if(userAlreadyExists){
             return res.status(400).json({success:false,message:"User already exists"});
+        }
+        if (role === 'teacher') {
+            return res.redirect('/signup/teacher');
+        }
+        if(role === 'student'){
+            return res.redirect('/signup/student');
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
@@ -28,14 +36,9 @@ export const signup =async (req, res) => {
             verifiedTokenExpiresAt:Date.now() + 24*60*60*1000
         })
         await user.save();
-
         //jwt
         generateTokenAndSetCookie(res,user._id);
-
         await sendVerificationEmail(user.email,verificationToken);
-
-
-
         res.status(201).json({success:true,
             message:"User created successfully",
             user: {
@@ -43,8 +46,6 @@ export const signup =async (req, res) => {
                 password:undefined
             },
         });
-
-
     }catch(err){
         res.status(400).json({success:false,message:err.message});
     }
@@ -85,11 +86,12 @@ export const login = async (req, res) => {
     try{
         const user = await User.findOne({email});
         if(!user){
-            return res.status(400).json({success:false,message:"Invalid credentials"});
+            // res.status(400).json({success:false,message:"No account exist please signup"});
+            return res.redirect('/signup');
         }
         const isPasswordValid = await bcryptjs.compare(password,user.password);
         if(!isPasswordValid){
-            return res.status(400).json({success:false,message:"Invalid credentials"});
+            return res.status(400).json({success:false,message:"Invalid"});
         }
         generateTokenAndSetCookie(res,user._id);
         user.lastLogin = new Date();

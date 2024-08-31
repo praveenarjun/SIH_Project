@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function applyFilters() {
+            const ratingFilter = document.getElementById('ratingFilter').value;
+            const fieldFilter = document.getElementById('fieldFilter').value;
+            window.location.href = `/teachers?ratingFilter=${ratingFilter}&fieldFilter=${fieldFilter}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Teachers</h2>
+        <div class="mb-3">
+            <label for="ratingFilter">Filter by Rating:</label>
+            <select id="ratingFilter" class="form-control" onchange="applyFilters()">
+                <option value="">Select</option>
+                <option value="highToLow">High to Low</option>
+                <option value="lowToHigh">Low to High</option>
+                <option value="4">Greater than or equal to 4</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="fieldFilter">Filter by Field of Work:</label>
+            <input type="text" id="fieldFilter" class="form-control" oninput="applyFilters()">
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Education</th>
+                    <th>Experience</th>
+                    <th>Rating</th>
+                    <th>Field of Work</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% teachers.forEach(function(teacher) { %>
+                    <tr>
+                        <td><%= teacher.name %></td>
+                        <td><%= teacher.education %></td>
+                        <td><%= teacher.experience %> years</td>
+                        <td><%= teacher.rating %></td>
+                        <td><%= teacher.fieldOfWork %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import { student } from '../model/student.model.js';
 
+
 export const studentform = async (req, res) => {
     const { photo, name, gender, email, semester, intrest, contactNo, branch } = req.body;
     try {
@@ -32,4 +33,9 @@ export const studentform = async (req, res) => {
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
     }
+};
+
+
+export const getStudentForm = (req, res) => {
+    res.render('studentForm');
 };
